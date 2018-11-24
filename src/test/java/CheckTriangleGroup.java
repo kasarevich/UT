@@ -1,4 +1,5 @@
 import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import triangle.Triangle;
@@ -7,7 +8,7 @@ public class CheckTriangleGroup {
     Triangle triangle;
 
     @DataProvider(name = "checkTriangleWithInvalidSizesOfSidesProvider")
-    public Object[][] checkTriangleWithInvalidSizesOfSidesProvider() {
+    public Object[][] checkTriangleWithInvalidSizesOfSidesData() {
         return new Object[][]{
                 {0.0d, 0.0d, 0.0d, "a<=0"},
                 {0.0d, 1.0d, 1.0d, "a<=0"},
@@ -35,7 +36,7 @@ public class CheckTriangleGroup {
     }
 
     @DataProvider(name = "checkTriangleWithValidSizesOfSidesProvider")
-    public Object[][] checkTriangleWithValidSizesOfSidesProvider() {
+    public Object[][] checkTriangleWithValidSizesOfSidesData() {
         return new Object[][]{
                 {4.6d, 4.6d, 8.0d, ""},
                 {4.7d, 4.7d, 4.7d, ""},
@@ -50,6 +51,11 @@ public class CheckTriangleGroup {
         Assert.assertEquals(triangle.getMessage(), expectedMessage);
     }
 
+    @AfterMethod
+    public void afterCheckTriangle_invalidSizesOfSides_returnsFalseAndMessage(){
+        triangle = null;
+    }
+
     @Test(expectedExceptions = Exception.class,
             dataProvider = "checkTriangleWithSizesOfSidesWhenOverflowCanAppearProvider")
     public void checkTriangle_tooBigSizesOfSides_overflowException(Double sideA, Double sideB, Double sideC){
@@ -57,11 +63,22 @@ public class CheckTriangleGroup {
         triangle.checkTriangle();
     }
 
+    @AfterMethod
+    public void afterCheckTriangle_tooBigSizesOfSides_overflowException(){
+        triangle = null;
+    }
+
+
     @Test(dataProvider = "checkTriangleWithValidSizesOfSidesProvider")
     public void checkTriangle_validSizesOfSides_returnsTrueAndEmptyMessage(Double sideA, Double sideB, Double sideC, String expectedMessage){
         triangle = new Triangle(sideA, sideB, sideC);
         Assert.assertTrue(triangle.checkTriangle());
         Assert.assertEquals(triangle.getMessage(), expectedMessage);
+    }
+
+    @AfterMethod
+    public void afterCheckTriangle_validSizesOfSides_returnsTrueAndEmptyMessage(){
+        triangle = null;
     }
 
 }
