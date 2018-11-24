@@ -5,6 +5,7 @@ import org.testng.annotations.Test;
 import triangle.Triangle;
 
 public class DetectTriangleGroup {
+
     Triangle triangle;
 
     @DataProvider(name = "detectTriangleWithInvalidSizesOfSidesProvider")
