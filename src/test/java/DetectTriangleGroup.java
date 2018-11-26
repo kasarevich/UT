@@ -22,24 +22,24 @@ public class DetectTriangleGroup {
 
                 {Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE},
 
-                {6.8d, 6.9d, 13.7d},
-                {7.0d, 7.1d, 14.1d},
-                {7.2d, 14.5d, 7.3d},
-                {7.4d, 15.0d, 7.5d},
-                {15.3d, 7.6d, 7.7d},
-                {15.8d, 7.8d, 7.9d},
+                {6.8d, 6.9d, 13.7d},  // сумма a + b равна c
+                {7.0d, 7.1d, 14.1d},  // сумма a + b меньше c
+                {7.2d, 14.5d, 7.3d},  // сумма a + c равна b
+                {7.4d, 15.0d, 7.5d},  // сумма a + c меньше b
+                {15.3d, 7.6d, 7.7d},  // сумма b + c равна a
+                {15.8d, 7.8d, 7.9d},  // сумма b + c меньше a
         };
     }
 
     @DataProvider(name = "detectTriangleWithDifferentCombinationsOfSizeProvider")
     public Object[][] detectTriangleWithDifferentCombinationsOfSizeData() {
         return new Object[][]{
-                {3.0d, 4.0d, 5.0d, 8},
-                {4.0d, 4.0d, (4.0d * Math.sqrt(2.0d)), 10},
-                {3.0d, 3.0d, 3.0d, 3},
-                {3.0d, 3.0d, 3.1d, 2},
+                {3.0d, 4.0d, 5.0d, 8},                              // прямоугольный
+                {(Math.sqrt(2.0d)), (Math.sqrt(2.0d)), 2.0d, 10},   // прямоугольный равнобедренный
+                {3.0d, 3.0d, 3.0d, 3},                              // равносторонний [равнобедренный]
+                {3.0d, 3.0d, 3.1d, 2},                              // равнобедренный
 
-                {3.0d, 3.1d, 3.2d, 4},
+                {3.0d, 3.1d, 3.2d, 4},                               // обычные на граничных значениях
                 {4.0d, 4.1d, 4.2d, 4},
                 {3.0d, 4.0d, 5.1d, 4},
         };
@@ -60,7 +60,7 @@ public class DetectTriangleGroup {
     @Test(dataProvider = "detectTriangleWithDifferentCombinationsOfSizeProvider")
     public void detectTriangle_DifferentCombinationsOfSize_returnsExpectedType(Double sideA, Double sideB, Double sideC, int typeOfTriangle){
         triangle = new Triangle(sideA, sideB, sideC);
-        Assert.assertEquals(triangle.detectTriangle(), typeOfTriangle);
+        Assert.assertEquals(triangle.detectTriangle(), typeOfTriangle, 0.00000000000000000001);
     }
 
     @AfterMethod

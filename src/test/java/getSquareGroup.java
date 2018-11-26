@@ -34,9 +34,9 @@ public class getSquareGroup {
     @DataProvider(name = "getSquarePositiveProvider")
     public Object[][] getSquarePositiveData() {
         return new Object[][]{
-                {3.0d, 4.0d, 5.0d},
-                {6.0d, 5.0d, 2.0d},
-                {10.0d, 15.d, 7.0d},
+                {3.0d, 4.0d, 5.0d, 6.0d},
+                {6.0d, 5.0d, 2.0d, 4.684d},
+                {10.0d, 15.d, 7.0d, 29.394d},
         };
     }
 
@@ -53,12 +53,9 @@ public class getSquareGroup {
     }
 
     @Test(dataProvider = "getSquarePositiveProvider")
-    public void getSquare_validSizes_returnsSquare(Double sideA, Double sideB, Double sideC){
+    public void getSquare_validSizes_returnsSquare(Double sideA, Double sideB, Double sideC, double square){
         triangle = new Triangle(sideA, sideB, sideC);
-        double p = (sideA + sideB + sideC)/2;
-        double square = Math.sqrt(p*(p-sideA)*(p-sideB)*(p - sideC));
-        triangle = new Triangle(sideA, sideB, sideC);
-        Assert.assertEquals(triangle.getSquare(), square);
+        Assert.assertEquals(triangle.getSquare(), square, 0.01);
     }
 
     @AfterMethod
